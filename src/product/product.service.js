@@ -3,20 +3,17 @@
 // reuseable
 
 import prisma from "../db/index.js";
+import { findProducts, findProductById, insertProduct } from "./product.repository.js";
 
 const getAllProducts = async () => {
-    const products = await prisma.product.findMany();
+    const products = await findProducts();
 
     return products;
 }
 
 const getProductbyId = async (id) => {
 
-    const product = await prisma.product.findUnique({
-        where: {
-            id
-        }
-    });
+    const product = await findProductById(id);
     if (!product) {
         throw new Error("Product not found");
     }
@@ -24,14 +21,7 @@ const getProductbyId = async (id) => {
 }
 
 const createProduct = async (newProductData) => {
-    const product = await prisma.product.create({
-        data: {
-            name: newProductData.name,
-            description: newProductData.description,
-            image: newProductData.image,
-            price: newProductData.price,
-        },
-    })
+    const product = await insertProduct(newProductData);
 
     return product;
 
@@ -50,9 +40,7 @@ const deleteProduct = async (id) => {
 }
 // KALAU PUT SEMUA FIELD HARUS DI UPDATE
 const updateProductPut = async (id, productData) => {
-    if (!(productData.image && productData.description && productData.name && productData.price)) {
-        return res.status(400).send("Some field are missing");
-    }
+
     const product = await prisma.product.update({
         where: {
             id: id
