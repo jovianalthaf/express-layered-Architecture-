@@ -5,7 +5,7 @@ npm install @prisma/client
 bikin model (save) 
 npx prisma generate
 setelah buat model
-npx prisma db push
+npx prisma db push ( bisa digunakan untuk edit fields)
 
 npx prisma studio
 
