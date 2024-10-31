@@ -1,0 +1,16 @@
+NPM INSTAL (LIBRARY)
+
+npx prisma init buat folder schema prisma
+npm install @prisma/client 
+bikin model (save) 
+npx prisma generate
+setelah buat model
+npx prisma db push
+
+npx prisma studio
+
+
+INGIN MENAMBAHKAN TABEL DI PRISMA
+- BUAT TABEL 
+- BUAT MIGRASI BARU npx prisma migrate dev --name add_user_table
+- GENERATE PRISMA NYA npx prisma generate
