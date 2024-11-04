@@ -2,7 +2,7 @@
 // kenapa dipisah? Supaya tanggung jawab nya ter-isolate dan function nya
 // reuseable
 
-import prisma from "../db/index.js";
+import prisma from "../utils/db.js";
 import { findProducts, findProductById, insertProduct } from "./product.repository.js";
 
 const getAllProducts = async () => {

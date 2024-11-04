@@ -3,7 +3,7 @@
 // kenapa pakai repository? jika kalau ingin ada perubahan tidak usah ubah servicenya
 // contoh ganti ORM dari prisma ke sequelize yang diganti aja dibagian repository saja
 // repository = ambil data atau komunikasi dengan database
-import prisma from "../db/index.js"
+import prisma from "../utils/db.js"
 const findProducts = async () => {
     // const products = await prisma.product.findMany();
     const products = await prisma.$queryRaw`SELECT * FROM product`

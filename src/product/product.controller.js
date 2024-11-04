@@ -1,7 +1,7 @@
 // Layer untuk handle request dan response
 // Biasanya juga handle validasi body
 import express from "express";
-import prisma from "../db/index.js"
+import prisma from "../utils/db.js"
 import { getAllProducts, getProductbyId, createProduct, deleteProduct, updateProductPut } from "./product.service.js";
 const router = express.Router();
 
