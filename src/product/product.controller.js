@@ -5,7 +5,9 @@ import prisma from "../utils/db.js"
 import { getAllProducts, getProductbyId, createProduct, deleteProduct, updateProductPut } from "./product.service.js";
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+
+
+export const getAllProductController = async (req, res) => {
     // dapetin banyak product disimpan dalam variabel product dan dikirim products
 
     // tungguin sampe dapetin data product dulu baru kirim
@@ -15,9 +17,11 @@ router.get('/', async (req, res) => {
     const products = await getAllProducts();
 
     res.send(products);
-});
+};
 
-router.get('/:id', async (req, res) => {
+
+
+export const getProductbyIdController = async (req, res) => {
     try {
         const productID = req.params.id;
         const product = await getProductbyId(productID);
@@ -33,9 +37,8 @@ router.get('/:id', async (req, res) => {
             statusCode: 404,
         });
     }
-});
-
-router.post('/', async (req, res) => {
+};
+export const createProductController = async (req, res) => {
     try {
         const newProductData = req.body;
         const product = await createProduct(newProductData);
@@ -51,9 +54,8 @@ router.post('/', async (req, res) => {
         });
     }
 
-});
-
-router.delete('/:id', async (req, res) => {
+};
+export const deleteProductController = async (req, res) => {
     try {
         const productID = req.params.id;
         const product = await deleteProduct(productID);
@@ -68,10 +70,12 @@ router.delete('/:id', async (req, res) => {
             statusCode: 404,
         });
     }
-});
+};
+
+
 
 // KALAU PUT SEMUA FIELD HARUS DI UPDATE
-router.put('/:id', async (req, res) => {
+export const updateProductController = async (req, res) => {
     try {
         const productID = req.params.id;
         const newProduct = req.body;
@@ -90,7 +94,8 @@ router.put('/:id', async (req, res) => {
             statusCode: 404,
         });
     }
-});
+};
+
 
 // KALAU PATCH TIDAK SEMUA HARUS DI UPDATE
 router.patch('/:id', async (req, res) => {

@@ -27,6 +27,7 @@ const insertProduct = async (newProductData) => {
             description: newProductData.description,
             image: newProductData.image,
             price: newProductData.price,
+            categoryId: newProductData.categoryId
         }
     });
     //     const product = await prisma.$queryRaw`INSERT INTO product (name,description,image,price)  

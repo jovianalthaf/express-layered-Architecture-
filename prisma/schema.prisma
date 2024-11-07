@@ -14,11 +14,13 @@ datasource db {
 }
 
 model Product {
-  id          String @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   price       Int
   description String
   image       String
+  Category    Category? @relation(fields: [categoryId], references: [id])
+  categoryId  Int
 }
 
 enum Role {
@@ -35,4 +37,12 @@ model User {
   isVerified      Boolean?
   EmailVerifiedAt DateTime?
   refreshToken    String?
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

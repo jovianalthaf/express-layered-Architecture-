@@ -23,8 +23,11 @@ export const protectedMiddleware = async (req, res, next) => {
             throw new Error("Token failed");
         }
     } else {
-        res.status(401);
-        throw new Error("Not authorized, no token");
+        res.status(401).json({
+            message: "Login First",
+            statusCode: 401
+        });
+
     }
 }
 
@@ -33,7 +36,10 @@ export const isAdmin = async (req, res, next) => {
     if (isAdminUser) {
         next();
     } else {
-        res.status(401);
-        throw new Error("Not Authorize,Admin only");
+        res.status(401).json({
+            message: "Not Authorize,Admin Only !",
+            statusCode: 401,
+        });
+
     }
 }
