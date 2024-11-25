@@ -52,8 +52,7 @@ const createResToken = async (user, statusCode, res) => {
         password: undefined,
     })
 }
-
-router.post('/register', async (req, res) => {
+export const register = async (req, res) => {
     try {
         const newUserData = req.body;
         const existingUser = await EmailUser(newUserData.email);
@@ -75,10 +74,8 @@ router.post('/register', async (req, res) => {
             statusCode: 404,
         });
     }
-
-
-})
-router.post('/login', async (req, res) => {
+}
+export const login = async (req, res) => {
     try {
         // validation input user
         if (!req.body.email && !req.body.passoword) {
@@ -105,10 +102,8 @@ router.post('/login', async (req, res) => {
             statusCode: 404,
         });
     }
-
-
-})
-router.get('/me', protectedMiddleware, async (req, res) => {
+}
+export const me = async (req, res) => {
     try {
         if (!req.user || !req.user.id) {
             return res.status(401).json({ message: "Not Authorized, no user found" });
@@ -125,9 +120,9 @@ router.get('/me', protectedMiddleware, async (req, res) => {
         console.error(error); // Optional: Untuk debugging
         res.status(500).json({ message: "Server Error" });
     }
+}
 
-});
-export const currentUser = async (req, res) => {
+export const logout = async (req, res) => {
     res.cookie('jwt', '', {
         httpOnly: true,
         expire: new Date(Date.now())
@@ -143,7 +138,6 @@ export const currentUser = async (req, res) => {
         message: 'Logout success'
     })
 }
-router.post('/logout', protectedMiddleware, currentUser)
 
 
 

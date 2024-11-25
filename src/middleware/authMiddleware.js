@@ -19,8 +19,11 @@ export const protectedMiddleware = async (req, res, next) => {
             next();
 
         } catch (error) {
-            res.status(401);
-            throw new Error("Token failed");
+            res.status(401).json({
+                statusCode: 401,
+                message: "Token failed"
+            });
+
         }
     } else {
         res.status(401).json({

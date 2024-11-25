@@ -14,9 +14,27 @@ export const getAllProductController = async (req, res) => {
 
     // prisma = database, ngambil model  product dan dapetin semuanya
     // select * from products;
-    const products = await getAllProducts();
+    try {
+        const products = await getAllProducts();
+        res.status(200).json({
+            message: "Success get all product",
+            statusCode: 200,
+            data: products,
+        });
+    } catch (err) {
+        res.status(500).json({
+            error: {
+                code: 500,
+                message: err.message,
+            }
+        });
+    }
 
-    res.send(products);
+
+
+
+
+    // res.send(products);
 };
 
 
@@ -32,9 +50,11 @@ export const getProductbyIdController = async (req, res) => {
             data: product
         });
     } catch (err) {
-        res.status(404).json({
-            message: err.message || "An error occurred",
-            statusCode: 404,
+        res.status(500).json({
+            error: {
+                code: 500,
+                message: err.message,
+            }
         });
     }
 };

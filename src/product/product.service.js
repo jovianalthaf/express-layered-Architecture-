@@ -7,7 +7,9 @@ import { findProducts, findProductById, insertProduct } from "./product.reposito
 
 const getAllProducts = async () => {
     const products = await findProducts();
-
+    if (!products) {
+        throw new Error("Product not found");
+    }
     return products;
 }
 

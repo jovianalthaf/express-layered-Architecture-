@@ -6,18 +6,32 @@
 import prisma from "../utils/db.js"
 const findProducts = async () => {
     // const products = await prisma.product.findMany();
-    const products = await prisma.$queryRaw`SELECT * FROM product`
+    // const products = await prisma.$queryRaw`SELECT * FROM product`
+    const products = await prisma.product.findMany({
+        include: {
+            Category: {
+                select: {
+                    name: true,
+                }
+            }
+        }
+    })
     return products;
 }
 const findProductById = async (id) => {
-    // const product = await prisma.product.findUnique({
-    //     where: {
-    //         id: id,
-    //     }
-    // })
-    const product = await prisma.$queryRaw` SELECT * from product WHERE id =  ${id}`
 
+    const product = await prisma.product.findUnique({
+        where: {
+            id: id
+        },
+        include: {
+            Category: {
+                select: { name: true, }
+            }
+        }
+    })
     return product;
+
 }
 
 const insertProduct = async (newProductData) => {
