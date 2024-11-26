@@ -3,6 +3,8 @@
 import express from "express";
 import prisma from "../utils/db.js"
 import { getAllProducts, getProductbyId, createProduct, deleteProduct, updateProductPut } from "./product.service.js";
+import { body, validationResult } from "express-validator";
+
 const router = express.Router();
 
 
@@ -58,23 +60,40 @@ export const getProductbyIdController = async (req, res) => {
         });
     }
 };
-export const createProductController = async (req, res) => {
-    try {
-        const newProductData = req.body;
-        const product = await createProduct(newProductData);
-        res.status(200).json({
-            message: "Success Add product",
-            statusCode: 200,
-            data: product
-        });
-    } catch (err) {
-        res.status(404).json({
-            message: err.message || "An error occurred",
-            statusCode: 404,
-        });
-    }
+export const createProductController = [
+    // Middleware untuk validasi input
+    body('name').notEmpty().withMessage('Mohon untuk isi nama field'),
+    body('description').notEmpty().withMessage('Deskripsi tidak boleh kosong'),
+    body('price').isNumeric().withMessage('Harga harus berupa angka'),
+    body('categoryId').notEmpty().withMessage('Category ID tidak boleh kosong'),
 
-};
+    // Controller utama
+    async (req, res) => {
+        // Mengecek hasil validasi
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                message: "Input tidak valid",
+                errors: errors.array(), // Menampilkan semua error
+            });
+        }
+
+        try {
+            const newProductData = req.body;
+            const product = await createProduct(newProductData);
+            res.status(200).json({
+                message: "Success Add product",
+                statusCode: 200,
+                data: product,
+            });
+        } catch (err) {
+            res.status(404).json({
+                message: err.message || "An error occurred",
+                statusCode: 404,
+            });
+        }
+    }
+];
 export const deleteProductController = async (req, res) => {
     try {
         const productID = req.params.id;

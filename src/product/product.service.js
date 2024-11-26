@@ -3,7 +3,7 @@
 // reuseable
 
 import prisma from "../utils/db.js";
-import { findProducts, findProductById, insertProduct } from "./product.repository.js";
+import { findProducts, findProductById, insertProduct, deleteProductRepository } from "./product.repository.js";
 
 const getAllProducts = async () => {
     const products = await findProducts();
@@ -30,11 +30,7 @@ const createProduct = async (newProductData) => {
 }
 
 const deleteProduct = async (id) => {
-    const product = await prisma.product.findUnique({
-        where: {
-            id: id,
-        }
-    });
+    const product = await deleteProductRepository(id);
     if (!product) {
         throw new Error("Product not found");
     }

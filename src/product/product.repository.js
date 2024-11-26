@@ -49,4 +49,18 @@ const insertProduct = async (newProductData) => {
     // `
     return product;
 }
-export { findProducts, findProductById, insertProduct };
+
+const deleteProductRepository = async (id) => {
+    const product = await prisma.product.findUnique({
+        where: {
+            id: id,
+        }
+    });
+
+    await prisma.product.delete({
+        where: { id },
+    })
+
+    return product
+}
+export { findProducts, findProductById, insertProduct, deleteProductRepository };

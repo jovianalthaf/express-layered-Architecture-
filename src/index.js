@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import productRoute from './routes/productRoutes.js'
 import authRoute from './routes/authRoutes.js'
+import categoryRoute from './routes/categoryRoutes.js';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -18,7 +19,7 @@ app.get("/api", (req, res) => {
 
 app.use(productRoute);
 app.use(authRoute);
-
+app.use(categoryRoute);
 app.listen(PORT, () => {
     console.log("Express API Running in : " + PORT);
 });
